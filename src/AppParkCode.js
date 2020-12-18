@@ -3,10 +3,10 @@ import { useState } from "react";
 import "./App.css";
 import Search from "./Search/Search";
 import Movie from "./Movie/Movie";
-import {MovieContext} from "./context/MovieContext";
 
 function AppNav() {
   const [searchValue, setSearchValue] = useState("");
+
   const [movieResults, setMovieResults] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -32,9 +32,12 @@ function AppNav() {
 
   return (
     <div className="App">
-      <MovieContext.Provider value={{searchValue, fetchMovieListAPI, movieResults, isFetching}}>
-      <Search/>
-      </MovieContext.Provider>
+      <Search
+        searchValue={searchValue}
+        fetchMovieListAPI={fetchMovieListAPI}
+        movieResults={movieResults}
+        isFetching={isFetching}
+      />
     </div>
   );
 }
@@ -47,6 +50,8 @@ function App() {
         <Route exact path='/' component={AppNav} />
         <Route exact path='/:movieTitle' component={Movie} /> 
         <Route component={() => <h1>Not Found</h1>} />
+        {/* render or component in line 54-55 has similar function */}
+        {/* <Route render={() => <h1>Not Found</h1>} /> */}
       </Switch>
     </Router>
   )
